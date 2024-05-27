@@ -1,0 +1,35 @@
+Code para el uso del CPU
+import psutil
+import datetime
+import time
+
+def obtener_info_cpu():
+    cpu_percent = psutil.cpu_percent(interval=1)
+    
+    return {
+        'etiquetatiempo': datetime.datetime.now().strftime("%H:%M:%S"),
+        'porcentaje': cpu_percent
+    }
+
+def guardar_encabezado(archivo):
+    with open(archivo, 'w') as file:
+        file.write("Marca de Tiempo,Uso de CPU (%)\n")
+        
+def guardar_info_cpu(info_cpu, archivo):
+    with open(archivo, 'a') as file:
+        file.write(f"{info_cpu['etiquetatiempo']},{info_cpu['porcentaje']}\n")
+
+if __name__ == "__main__":
+    duracion = 300
+    intervalo = 1
+    nombre_archivo = "usoCPU.txt"
+    
+    guardar_encabezado(nombre_archivo)
+    
+    tiempo_inicio = time.time()
+    while (time.time() - tiempo_inicio) < duracion:
+        info_cpu = obtener_info_cpu()
+        guardar_info_cpu(info_cpu, nombre_archivo)
+        time.sleep(intervalo)
+        
+    print(f"Información registrada en '{nombre_archivo}' durante {duracion} segundos.")
