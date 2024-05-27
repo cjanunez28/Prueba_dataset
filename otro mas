@@ -1,0 +1,27 @@
+import pandas as pd
+url = "https://raw.githubusercontent.com/cjanunez28/Prueba_dataset/main/usodeCPU.txt"
+
+try:
+    df = pd.read_csv(url)
+    print("Primeras filas del Dataset: ")
+    print(df.head())
+except Exception as e:
+    print("Error al leer el dataset", e)
+    
+import matplotlib.pyplot as plt
+colummna_de_interes = "Uso de CPU (%)"
+plt.hist(df[colummna_de_interes], bins=20, color='skyblue', edgecolor='black')
+plt.xlabel("Valores")
+plt.ylabel("Frecuencia")
+plt.title("Histograma de " + colummna_de_interes)
+plt.show()
+
+import matplotlib.pyplot as plt
+
+xd = "Marca de Tiempo"
+yd = "Uso de CPU (%)"
+plt.plot(df[xd], df[yd], label="Serie 1")
+plt.xlabel("Tiempo")
+plt.ylabel("Y")
+plt.title("Grafico de Dispersión")
+plt.show()
